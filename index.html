@@ -1464,16 +1464,15 @@
         animate();
     }
 
-    // ==================== 初始化 ====================
     // ==================== 加入学习人数动画 ====================
     (function() {
-        var targetNum = 0;
         var el = document.getElementById('join-number');
         if (!el) return;
         // 从 localStorage 读取上次显示的数字
         var lastNum = parseInt(localStorage.getItem('zzll_join_num') || '0');
-        // 每次打开页面，人数+1
-        var currentNum = lastNum + 1;
+        // 每次打开页面，随机增加 1-5 人
+        var increment = Math.floor(Math.random() * 5) + 1;
+        var currentNum = lastNum + increment;
         localStorage.setItem('zzll_join_num', currentNum);
 
         // 数字滚动动画（从上一数字滚动到新数字）
