@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+*/.DS_Store
+
+# 临时文件
+*.tmp
+*.bak
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 旧版本备份（可选保留，但不上传）
+index-v*-backup.html
+index-v*.html
+
+# 原始数据文件（Excel 源文件不需要上传，模板已放在 templates/）
+*.xlsx
+*.xls
+*.csv
+!templates/*.xlsx
+
+# 日志文件
+*.log
