@@ -403,7 +403,7 @@
         .recite-a strong { color: var(--accent); }
 
         .footer {
-            text-align: center; padding: 30px 0 60px 0;
+            text-align: center; padding: 30px 0;
             color: var(--text-secondary); font-size: 0.75rem;
         }
 
@@ -636,15 +636,49 @@
         }
         /* ==================== 已加入学习人数展示 ==================== */
         .join-counter {
-            position: fixed;
-            left: 0; right: 0; bottom: 0;
-            z-index: 999;
             text-align: center;
-            padding: 10px 0;
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            padding: 8px 0 50px 0;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
+        .join-counter-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        }
+        .join-counter-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        /* 拟物化主题适配 */
+        [data-theme="skeu"] .join-counter-text {
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+        [data-theme="skeu"] .join-counter-number {
+            color: #ffd700;
+            text-shadow: 0 0 12px rgba(255,215,0,0.4);
+        }
+        [data-theme="skeu"] .join-counter-dot {
+            background: #00e676;
+            box-shadow: 0 0 8px rgba(0,230,118,0.6);
+        }
+
+    </style>
         .join-counter-text {
             font-size: 0.8rem;
             color: var(--text-secondary);
@@ -873,10 +907,8 @@
 
         <!-- 已加入学习人数 -->
         <div class="join-counter" id="join-counter">
-            <div class="join-counter-text">
-                <span class="join-counter-dot"></span>
-                已有 <span class="join-counter-number" id="join-number">0</span> 人加入学习
-            </div>
+            <span class="join-counter-dot"></span>
+            已有 <span class="join-counter-number" id="join-number">0</span> 人加入学习
         </div>
 
         <div class="footer">
