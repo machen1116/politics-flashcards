@@ -403,7 +403,7 @@
         .recite-a strong { color: var(--accent); }
 
         .footer {
-            text-align: center; padding: 30px 0;
+            text-align: center; padding: 30px 0 60px 0;
             color: var(--text-secondary); font-size: 0.75rem;
         }
 
@@ -636,9 +636,14 @@
         }
         /* ==================== 已加入学习人数展示 ==================== */
         .join-counter {
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            z-index: 999;
             text-align: center;
-            padding: 16px 0 8px 0;
-            margin-top: 8px;
+            padding: 10px 0;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
         }
         .join-counter-text {
             font-size: 0.8rem;
