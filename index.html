@@ -900,6 +900,11 @@
     function showPage(id) {
         document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
         document.getElementById(id).classList.add('active');
+        // 只在首页显示学习人数
+        var counter = document.getElementById('join-counter');
+        if (counter) {
+            counter.style.display = (id === 'page-home') ? 'block' : 'none';
+        }
     }
 
     // ==================== 全局状态 ====================
