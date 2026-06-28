@@ -875,7 +875,7 @@
         <div class="join-counter" id="join-counter">
             <div class="join-counter-text">
                 <span class="join-counter-dot"></span>
-                已有 <span class="join-counter-number" id="join-number">12,847</span> 人加入学习
+                已有 <span class="join-counter-number" id="join-number">0</span> 人加入学习
             </div>
         </div>
 
@@ -1467,30 +1467,26 @@
     // ==================== 初始化 ====================
     // ==================== 加入学习人数动画 ====================
     (function() {
-        var targetNum = 12847;
+        var targetNum = 0;
         var el = document.getElementById('join-number');
         if (!el) return;
-        // 从 localStorage 读取上次显示的数字，实现每次打开都有增长效果
+        // 从 localStorage 读取上次显示的数字
         var lastNum = parseInt(localStorage.getItem('zzll_join_num') || '0');
-        if (lastNum === 0 || lastNum < targetNum) {
-            lastNum = targetNum;
-        }
-        // 每次打开随机增加 1-5 人，模拟实时增长
-        var increment = Math.floor(Math.random() * 5) + 1;
-        var currentNum = lastNum + increment;
+        // 每次打开页面，人数+1
+        var currentNum = lastNum + 1;
         localStorage.setItem('zzll_join_num', currentNum);
 
-        // 数字滚动动画
-        var duration = 1200;
-        var start = lastNum;
-        var end = currentNum;
+        // 数字滚动动画（从上一数字滚动到新数字）
+        var duration = 800;
+        var startNum = lastNum;
+        var endNum = currentNum;
         var startTime = null;
         function animateNumber(timestamp) {
             if (!startTime) startTime = timestamp;
             var progress = Math.min((timestamp - startTime) / duration, 1);
             // easeOutQuart
             progress = 1 - Math.pow(1 - progress, 4);
-            var val = Math.floor(start + (end - start) * progress);
+            var val = Math.floor(startNum + (endNum - startNum) * progress);
             el.textContent = val.toLocaleString('zh-CN');
             if (progress < 1) {
                 requestAnimationFrame(animateNumber);
