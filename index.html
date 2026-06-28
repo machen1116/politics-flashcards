@@ -634,6 +634,53 @@
             .home-title { font-size: 1.5rem; }
             .big-card { padding: 20px 16px; }
         }
+        /* ==================== 已加入学习人数展示 ==================== */
+        .join-counter {
+            text-align: center;
+            padding: 16px 0 8px 0;
+            margin-top: 8px;
+        }
+        .join-counter-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .join-counter-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        }
+        .join-counter-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        /* 拟物化主题适配 */
+        [data-theme="skeu"] .join-counter-text {
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+        [data-theme="skeu"] .join-counter-number {
+            color: #ffd700;
+            text-shadow: 0 0 12px rgba(255,215,0,0.4);
+        }
+        [data-theme="skeu"] .join-counter-dot {
+            background: #00e676;
+            box-shadow: 0 0 8px rgba(0,230,118,0.6);
+        }
+
     </style>
 </head>
 <body>
@@ -817,6 +864,14 @@
             <div class="theme-btn active" data-theme="default" title="深蓝科技"></div>
             <div class="theme-btn" data-theme="light" title="晴空蓝"></div>
             <div class="theme-btn" data-theme="skeu" title="拟物化"></div>
+        </div>
+
+        <!-- 已加入学习人数 -->
+        <div class="join-counter" id="join-counter">
+            <div class="join-counter-text">
+                <span class="join-counter-dot"></span>
+                已有 <span class="join-counter-number" id="join-number">12,847</span> 人加入学习
+            </div>
         </div>
 
         <div class="footer">
@@ -1405,6 +1460,40 @@
     }
 
     // ==================== 初始化 ====================
+    // ==================== 加入学习人数动画 ====================
+    (function() {
+        var targetNum = 12847;
+        var el = document.getElementById('join-number');
+        if (!el) return;
+        // 从 localStorage 读取上次显示的数字，实现每次打开都有增长效果
+        var lastNum = parseInt(localStorage.getItem('zzll_join_num') || '0');
+        if (lastNum === 0 || lastNum < targetNum) {
+            lastNum = targetNum;
+        }
+        // 每次打开随机增加 1-5 人，模拟实时增长
+        var increment = Math.floor(Math.random() * 5) + 1;
+        var currentNum = lastNum + increment;
+        localStorage.setItem('zzll_join_num', currentNum);
+
+        // 数字滚动动画
+        var duration = 1200;
+        var start = lastNum;
+        var end = currentNum;
+        var startTime = null;
+        function animateNumber(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            // easeOutQuart
+            progress = 1 - Math.pow(1 - progress, 4);
+            var val = Math.floor(start + (end - start) * progress);
+            el.textContent = val.toLocaleString('zh-CN');
+            if (progress < 1) {
+                requestAnimationFrame(animateNumber);
+            }
+        }
+        requestAnimationFrame(animateNumber);
+    })();
+
     document.addEventListener('DOMContentLoaded', function() {
         updateHome();
         bindEvents();
