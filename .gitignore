@@ -24,3 +24,7 @@ index-v*.html
 
 # 日志文件
 *.log
+
+# 本地备份文件夹（不提交）
+backup/
+scripts/backup/
